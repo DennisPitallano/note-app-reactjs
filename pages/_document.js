@@ -10,9 +10,9 @@ class MyDocument extends Document {
     return (
         <Html>
           <Head>
-            <link href={'/style/bootstrap.css'} rel="stylesheet" />
-            <link href={'/style/fontawesome/css/all.min.css'} rel="stylesheet" />
-            <link href={'/style/style.css'} rel="stylesheet" />
+            <link href='/style/bootstrap.css' rel="stylesheet" />
+            <link href='/style/fontawesome/css/all.min.css' rel="stylesheet" />
+            <link href='/style/style.css' rel="stylesheet" />
           </Head>
           <body>
             <Main />

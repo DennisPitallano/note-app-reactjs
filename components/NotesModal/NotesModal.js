@@ -22,7 +22,7 @@ function NotesModal() {
           }
         `}
       </style>
-      <div className={cssShowHide} tabindex="-1" role="dialog">
+      <div className={cssShowHide} role="dialog">
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <NoteModalHeader />

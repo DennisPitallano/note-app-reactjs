@@ -13,11 +13,10 @@ function NotesModalHeader() {
         onClick={() => {
             setModalShow(false);
         }}
-        className="btn btn-secondary"
+        className="btn-close"
         data-dismiss="modal"
         aria-label="Close"
       >
-        <span aria-hidden="true">&times;</span>
       </button>
     </div>
   );

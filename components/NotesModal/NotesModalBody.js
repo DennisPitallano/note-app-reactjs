@@ -8,7 +8,7 @@ function NotesModalBody() {
     <div className="modal-body">
       <form>
           <div className="form-group">
-            <label for="recipient-name" className="col-form-label">Title:</label>
+            <label htmlFor="recipient-name" className="col-form-label">Title:</label>
             <input type="text" className="form-control"
              value={modalNoteTitle}
              onChange={event=>{
@@ -16,7 +16,7 @@ function NotesModalBody() {
              }} />
           </div>
           <div className="form-group">
-            <label for="message-text" className="col-form-label">Message:</label>
+            <label htmlFor="message-text" className="col-form-label">Message:</label>
             <textarea className="form-control"
             value={modalNoteDescription}
             onChange={event=> {
@@ -28,5 +28,4 @@ function NotesModalBody() {
     </div>
   );
 }
-
 export default NotesModalBody;

@@ -1,40 +1,42 @@
-import notes from "../data/notes.json";
-import { v4 as uuidv4 } from "uuid";
-import useGeneralizedCrudMethod from "./useGeneralizedCrudMethod";
+import useEntityNotes from "./entityMethods/useEntityNotes";
+import useEntityNoteAttributes from "./entityMethods/useEntityNoteAttributes";
 
 function useNotes() {
   const {
     data: notesData,
     error: notesDataError,
-    createRecord: createNotesData,
-    updateRecord: updateNotesData,
-    deleteRecord: deleteNotesData,
-  } = useGeneralizedCrudMethod(notes);
+    createNoteEntity,
+    updateNoteEntity,
+    deleteNoteEntity,
+  } = useEntityNotes();
+  const {
+    data: noteAttributesData,
+    error: noteAttributesDataError,
+    updateNoteAttributesEntity,
+    deleteNoteAttributesEntity,
+  } = useEntityNoteAttributes();
 
   function createNote(title, description) {
-    const newNote = {
-      id: uuidv4(),
-      title,
-      description,
-      createDate: new Date().toISOString(),
-    };
-    createNotesData(newNote);
+    createNoteEntity(title, description);
   }
-
-  function updateNote(id, title, description) {
-    const updateObject = {
-      id,
-      title,
-      description,
-    };
-    updateNotesData(id,updateObject);
+  function updateNote(id, title, description, pinned, important) {
+    updateNoteEntity(id, title, description);
+    updateNoteAttributesEntity(id,pinned,important);
   }
-
   function deleteNote(id) {
-    deleteNotesData(id);
+    deleteNoteEntity(id);
+    deleteNoteAttributesEntity(id);
   }
 
-  return { notesData, notesDataError, createNote, updateNote, deleteNote };
+  return {
+    notesData,
+    notesDataError,
+    noteAttributesData,
+    noteAttributesDataError,
+    createNote,
+    updateNote,
+    deleteNote,
+  };
 }
 
 export default useNotes;
