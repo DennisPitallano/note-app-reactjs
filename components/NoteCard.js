@@ -44,12 +44,12 @@ function NoteCard({ note }) {
                 </p>
             </div>
             <div className="d-flex align-center-items">
-                <span className="mr-2">
+                <span className="mx-1">
                     <a href="#" onClick={()=>deleteNoteFn(note.id)}>
                         <i className="fa fa-trash fa-lg"></i>
                     </a>
                 </span>
-                <span className="mr-2">
+                <span className="mx-1">
                     <a href="#" onClick={()=>editNoteFn(note.id)}>
                         <i className="fa fa-edit fa-lg"></i>
                     </a>
