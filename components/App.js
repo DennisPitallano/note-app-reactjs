@@ -3,11 +3,12 @@ import NoteList from "./NoteList";
 import Menu from "./Menu";
 import { createContext } from "react";
 import useNotesModal from "../hooks/useNotesModal";
+import LoaderPlaceHolder from "./Loader";
 
 export const NotesContext = createContext({
   notesData: [],
   notesDataError: "",
-  noteAttributesData:[],
+  noteAttributesData: [],
   createNote: () => {},
   updateNote: () => {},
   deleteNote: () => {},
@@ -31,7 +32,9 @@ function App() {
     return <div className="container">error:{notesDataError}</div>;
   }
   if (!contextValue.notesData) {
-    return <div className="container">...loading</div>;
+    return (
+      <LoaderPlaceHolder/>
+    );
   }
 
   return (

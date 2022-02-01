@@ -18,7 +18,7 @@ function NoteList() {
   return (
     <>
       {notesData && <NotesModal />}
-      <div className="row tab-content bg-transparent note-has-grid mt-4">
+      <div className="row tab-content bg-transparent mt-4">
         {notesData
         .filter(n=> notesPinned.includes(n.id))
         .sort(sortByDate).map((note) => {
@@ -26,7 +26,7 @@ function NoteList() {
         })}
       </div>
       {notesPinned.length >0 ? <hr />: null}
-      <div className="row tab-content bg-transparent note-has-grid mt-2">
+      <div className="row tab-content bg-transparent  mt-2">
         {notesData
         .filter(n=> !notesPinned.includes(n.id))
         .sort(sortByDate).map((note) => {
