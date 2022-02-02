@@ -7,13 +7,15 @@ function useEntityNotes() {
     useGeneralizedCrudMethod(notes);
 
   function createNoteEntity(title, description) {
+    const noteId = uuidv4();
     const newNote = {
-      id: uuidv4(),
+      id: noteId,
       title,
       description,
       createDate: new Date().toISOString(),
     };
     createRecord(newNote);
+    return noteId;
   }
 
   function updateNoteEntity(id, title, description) {
