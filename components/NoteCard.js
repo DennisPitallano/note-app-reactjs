@@ -2,8 +2,14 @@ import { NotesContext, NotesModalContext } from "./App";
 import { useContext } from "react";
 
 function NoteCard({ note }) {
-  const { notesData, noteAttributesData, deleteNote, updateNote } =
-    useContext(NotesContext);
+  const {
+    notesData,
+    noteAttributesData,
+    tagsData,
+    noteOnTagsData,
+    deleteNote,
+    updateNote,
+  } = useContext(NotesContext);
   const {
     setModalNoteId,
     setModalNoteTitle,
@@ -29,6 +35,63 @@ function NoteCard({ note }) {
 
   const notePinned = noteAttributes?.pinned === 1 ? true : false;
   const noteImportant = noteAttributes?.important === 1 ? true : false;
+  
+  const tagsDataDictionary = tagsData
+  ? Object.fromEntries(tagsData.map(({id,tagName}) => [id,tagName]))
+  :[];
+
+  const noteTags = noteOnTagsData
+    ? noteOnTagsData
+        .filter((r) => r.noteId === note.id)
+        .map((r) => {
+          return {
+            ...r,
+            tagName: tagsDataDictionary[r.tagId],
+          };
+        })
+    : [];
+
+  function NoteTagsSection() {
+    return (
+      <div className="row margin-left-right-15">
+        {noteTags
+          .sort(function (a, b) {
+            const textA = a?.tagName?.toUpperCase();
+            const textB = b?.tagName?.toUpperCase();
+            return textA < textB ? -1 : textA > textB ? 1 : 0;
+          })
+          .map((noteTag) => {
+            return (
+              <div key={noteTag.id}>
+                <span className="badge bg-secondary">
+                {noteTag.tagName}&nbsp;
+                  <a className="text-warning"
+                    href="#"
+                    onClick={() => {
+                      const tagIdsForNote = noteTags
+                        .filter((rec) => rec.tagId != noteTag.tagId)
+                        .map((rec) => rec.tagId);
+                      updateNote(
+                        note.id,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        tagIdsForNote,
+                        undefined
+                      );
+                    }}
+                  >
+                    {" "}
+                    <i className="icon fa fa-times-circle"></i>{" "}
+                  </a>
+                </span>
+              </div>
+            );
+          })}
+      </div>
+    );
+  }
 
   return (
     <>
@@ -37,7 +100,8 @@ function NoteCard({ note }) {
           <div className="card-body">
             <h5 className="card-title">
               {note.title}
-              <a className="position-absolute top-0 start-50 translate-middle"
+              <a
+                className="position-absolute top-0 start-50 translate-middle"
                 href="#"
                 onClick={() => {
                   updateNote(
@@ -103,6 +167,9 @@ function NoteCard({ note }) {
             >
               <i className="fas fa-pencil-alt"></i>
             </a>
+            <div className="my-2">
+              <NoteTagsSection />
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import useEntityNotes from "./entityMethods/useEntityNotes";
 import useEntityNoteAttributes from "./entityMethods/useEntityNoteAttributes";
 import useEntityNoteChangeLogs from "./entityMethods/useEntityNoteChangeLogs";
+import useEntityTags from "./entityMethods/useEntityTags";
+import useEntityNoteOnTags from "./entityMethods/useEntityNoteOnTags";
 
 function useNotes() {
   const {
@@ -17,24 +19,41 @@ function useNotes() {
     deleteNoteAttributesEntity,
   } = useEntityNoteAttributes();
   const {
-    data:noteChangeLogsData,
-    error:noteChageLogsDataError,
-    createNoteChangeLogsEntity
-  }= useEntityNoteChangeLogs();
+    data: noteChangeLogsData,
+    error: noteChageLogsDataError,
+    createNoteChangeLogsEntity,
+  } = useEntityNoteChangeLogs();
 
+  const {
+    data: tagsData,
+    error: tagsDataError,
+    createTagsAndMerge,
+  } = useEntityTags();
 
-  function createNote(title, description) {
+  const {
+    data: noteOnTagsData,
+    error: noteOnTagsDataError,
+    updateNoteTags,
+    deleteNoteOnTagsByNoteId,
+  } = useEntityNoteOnTags();
+
+  function createNote(title, description, tagIdsIn, tagNamesIn) {
     const noteId = createNoteEntity(title, description);
-    createNoteChangeLogsEntity(noteId,"CREATE");
+    createNoteChangeLogsEntity(noteId, "CREATE");
+    const tagIds = createTagsAndMerge(tagIdsIn, tagNamesIn);
+    updateNoteTags(tagIds, noteId);
   }
-  function updateNote(id, title, description, pinned, important) {
+  function updateNote(id, title, description, pinned, important,tagIdsIn,tagNamesIn) {
     updateNoteEntity(id, title, description);
-    updateNoteAttributesEntity(id,pinned,important);
-    createNoteChangeLogsEntity(id,"UPDATE");
+    updateNoteAttributesEntity(id, pinned, important);
+    createNoteChangeLogsEntity(id, "UPDATE");
+    const tagIds = createTagsAndMerge(tagIdsIn,tagNamesIn);
+    updateNoteTags(tagIds,id);
   }
   function deleteNote(id) {
     deleteNoteEntity(id);
     deleteNoteAttributesEntity(id);
+    deleteNoteOnTagsByNoteId(id);
   }
 
   return {
@@ -44,6 +63,9 @@ function useNotes() {
     noteAttributesDataError,
     noteChangeLogsData,
     noteChageLogsDataError,
+    tagsData,tagsDataError,
+    noteOnTagsData,
+    noteOnTagsDataError,
     createNote,
     updateNote,
     deleteNote,
