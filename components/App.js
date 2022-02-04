@@ -25,6 +25,10 @@ export const NotesModalContext = createContext({
   setModalNoteTitle: () => {},
   modalNoteDescription: "",
   setModalNoteDescription: () => {},
+  modalNoteTagIds:[],
+  setModalNoteTagIds: () => {},
+  tagNamesNewValue:"",
+  setTagNamesNewValue : () => {}
 });
 
 function App() {

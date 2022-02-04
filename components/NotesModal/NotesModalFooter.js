@@ -2,7 +2,8 @@ import { NotesModalContext, NotesContext } from "../App";
 import { useContext } from "react";
 
 function NotesModalFooter() {
-  const { modalNoteId, setModalShow, modalNoteTitle, modalNoteDescription } =
+  const { modalNoteId, setModalShow, modalNoteTitle, modalNoteDescription,
+  modalNoteTagIds,tagNamesNewValue } =
     useContext(NotesModalContext);
   const { createNote, updateNote } = useContext(NotesContext);
   return (
@@ -11,7 +12,10 @@ function NotesModalFooter() {
         <button
           type="button"
           onClick={() => {
-            updateNote(modalNoteId, modalNoteTitle, modalNoteDescription);
+            updateNote(modalNoteId, modalNoteTitle, modalNoteDescription,
+              undefined
+              ,undefined
+              ,modalNoteTagIds,tagNamesNewValue);
             setModalShow(false);
           }}
           className="btn btn-primary"
@@ -33,7 +37,9 @@ function NotesModalFooter() {
         <button
           type="button"
           onClick={() => {
-            createNote(modalNoteTitle,modalNoteDescription);
+            createNote(modalNoteTitle, modalNoteDescription,
+              modalNoteTagIds,
+              tagNamesNewValue);
             setModalShow(false);
           }}
           className="btn btn-info"

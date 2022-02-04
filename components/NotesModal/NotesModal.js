@@ -3,6 +3,7 @@ import NotesModalBody from "./NotesModalBody";
 import NotesModalFooter from "./NotesModalFooter";
 import {NotesModalContext}  from "../App";
 import {useContext} from "react";
+import NotesModalTags from "./NotesModalTags";
 
 function NotesModal() {
   const {modalShow} = useContext(NotesModalContext);
@@ -27,6 +28,7 @@ function NotesModal() {
           <div className="modal-content">
             <NoteModalHeader />
             <NotesModalBody />
+            <NotesModalTags />
             <NotesModalFooter />
           </div>
         </div>

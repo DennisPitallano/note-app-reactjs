@@ -15,6 +15,8 @@ function NoteCard({ note }) {
     setModalNoteTitle,
     setModalNoteDescription,
     setModalShow,
+    setModalNoteTagIds,
+    setTagNamesNewValue
   } = useContext(NotesModalContext);
 
   function editNoteFn(noteId) {
@@ -22,6 +24,9 @@ function NoteCard({ note }) {
     setModalNoteId(noteId);
     setModalNoteTitle(noteData.title);
     setModalNoteDescription(noteData.description);
+    setTagNamesNewValue("");
+    setModalNoteTagIds(noteOnTagsData.filter(rec=> rec.noteId ===noteId)
+    .map(rec=>rec.tagId));
     setModalShow(true);
   }
 
@@ -53,7 +58,7 @@ function NoteCard({ note }) {
 
   function NoteTagsSection() {
     return (
-      <div className="row margin-left-right-15">
+      <div className=" margin-left-right-15">
         {noteTags
           .sort(function (a, b) {
             const textA = a?.tagName?.toUpperCase();
@@ -62,8 +67,7 @@ function NoteCard({ note }) {
           })
           .map((noteTag) => {
             return (
-              <div key={noteTag.id}>
-                <span className="badge bg-secondary">
+                <span key={noteTag.id} className="badge bg-secondary mx-1">
                 {noteTag.tagName}&nbsp;
                   <a className="text-warning"
                     href="#"
@@ -86,7 +90,6 @@ function NoteCard({ note }) {
                     <i className="icon fa fa-times-circle"></i>{" "}
                   </a>
                 </span>
-              </div>
             );
           })}
       </div>
