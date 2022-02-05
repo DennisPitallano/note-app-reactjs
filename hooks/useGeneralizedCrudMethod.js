@@ -52,9 +52,9 @@ function useGeneralizedCrudMethods(url, errorNotificationFn) {
   }
   function updateRecord(id, updateObject) {
     async function updateData() {
+      const startingData = [...data];
       try {
         //url += "xxx";
-        await axios.put(`${url}/${id}`, { ...updateObject });
         setData(function (oriState) {
           const dataRecord = oriState.find((rec) => rec.id === id);
           for (const [key, value] of Object.entries(updateObject)) {
@@ -62,7 +62,10 @@ function useGeneralizedCrudMethods(url, errorNotificationFn) {
           }
           return oriState.map((rec) => (rec.id === id ? dataRecord : rec));
         });
+        await new Promise(resolve=> setTimeout(resolve,1000));
+        await axios.put(`${url}/${id}`, { ...updateObject });
       } catch (e) {
+        setData(startingData);
         const errorString = formatErrorString(e, url);
         errorNotificationFn?.(errorString);
         validate();

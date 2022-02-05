@@ -18,6 +18,7 @@ function useEntityNotes(url,errorNotificationFn) {
   }
 
   function updateNoteEntity(id, title, description) {
+    
     const updateObject = {
       id,
       title,

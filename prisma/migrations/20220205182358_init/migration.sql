@@ -10,7 +10,7 @@ CREATE TABLE "Note" (
 CREATE TABLE "NoteAttributes" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "noteId" TEXT NOT NULL,
-    "import" INTEGER,
+    "important" INTEGER,
     "pinned" INTEGER,
     "updateDate" TEXT
 );
@@ -34,7 +34,7 @@ CREATE TABLE "NoteOnTag" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "noteId" TEXT NOT NULL,
     "tagId" TEXT NOT NULL,
-    "createAt" TEXT
+    "createdAt" TEXT
 );
 
 -- CreateIndex
