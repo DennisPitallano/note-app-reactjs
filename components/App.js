@@ -1,11 +1,12 @@
 import useNotes from "../hooks/useNotes";
 import NoteList from "./NoteList";
 import Menu from "./Menu";
-import { createContext,useState } from "react";
+import { createContext, useState } from "react";
 import useNotesModal from "../hooks/useNotesModal";
 import LoaderPlaceHolder from "./Loader";
 import NoteChangeLogs from "./NoteChangeLogs";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const NotesContext = createContext({
   notesData: [],
@@ -25,23 +26,26 @@ export const NotesModalContext = createContext({
   setModalNoteTitle: () => {},
   modalNoteDescription: "",
   setModalNoteDescription: () => {},
-  modalNoteTagIds:[],
+  modalNoteTagIds: [],
   setModalNoteTagIds: () => {},
-  tagNamesNewValue:"",
-  setTagNamesNewValue : () => {}
+  tagNamesNewValue: "",
+  setTagNamesNewValue: () => {},
 });
 
 function App() {
-  const contextValue = useNotes();
+  function errorNotificationFn(errorMessage) {
+    toast.error(errorMessage);
+    console.log("App: Error", errorMessage);
+  }
+
+  const contextValue = useNotes(errorNotificationFn);
   const contextValueNoteModal = useNotesModal();
-  const [currentTab,setCurrentTab] = useState("notes"); //["notes","logs"]
+  const [currentTab, setCurrentTab] = useState("notes"); //["notes","logs"]
   if (contextValue.notesDataError) {
     return <div className="container">error:{notesDataError}</div>;
   }
   if (!contextValue.notesData) {
-    return (
-      <LoaderPlaceHolder/>
-    );
+    return <LoaderPlaceHolder />;
   }
 
   return (
@@ -49,10 +53,11 @@ function App() {
       <NotesContext.Provider value={contextValue}>
         <NotesModalContext.Provider value={contextValueNoteModal}>
           <Menu currentTab={currentTab} setCurrentTab={setCurrentTab} />
-          {currentTab==="notes" && <NoteList />}
-          {currentTab ==="logs" && <NoteChangeLogs />}
+          {currentTab === "notes" && <NoteList />}
+          {currentTab === "logs" && <NoteChangeLogs />}
         </NotesModalContext.Provider>
       </NotesContext.Provider>
+      <ToastContainer />
     </div>
   );
 }

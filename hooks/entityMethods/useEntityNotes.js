@@ -1,10 +1,9 @@
 import useGeneralizedCrudMethod from "../useGeneralizedCrudMethod";
-import notes from "../../data/notes.json";
 import { v4 as uuidv4 } from "uuid";
 
-function useEntityNotes() {
+function useEntityNotes(url,errorNotificationFn) {
   const { data, error, createRecord, updateRecord, deleteRecord } =
-    useGeneralizedCrudMethod(notes);
+    useGeneralizedCrudMethod(url,errorNotificationFn);
 
   function createNoteEntity(title, description) {
     const noteId = uuidv4();

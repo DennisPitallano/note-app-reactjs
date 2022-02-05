@@ -1,10 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import noteAttributes from "../../data/noteAttributes.json";
 import useGeneralizedCrudMethod from "../useGeneralizedCrudMethod";
 
-function useEntityNoteAttributes() {
+function useEntityNoteAttributes(url,errorNotificationFn) {
   const { data, error, createRecord, updateRecord, deleteRecord } =
-    useGeneralizedCrudMethod(noteAttributes);
+    useGeneralizedCrudMethod(url,errorNotificationFn);
 
   function createNoteAttributesEntity(noteId, pinned, important) {
     createRecord({
@@ -12,7 +11,7 @@ function useEntityNoteAttributes() {
       noteId: noteId,
       pinned: pinned === undefined ? undefined : Number(pinned),
       important: important === undefined ? undefined : Number(important),
-      dateUpdate: new Date().toISOString(),
+      updateDate: new Date().toISOString(),
     });
   }
 

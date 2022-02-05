@@ -1,10 +1,9 @@
-import noteChangeLogs from "../../data/noteChangeLogs.json";
 import { v4 as uuidv4 } from "uuid";
 import useGeneralizedCrudMethod from "../useGeneralizedCrudMethod";
 
-function useEntityNoteChangeLogs() {
+function useEntityNoteChangeLogs(url,errorNotificationFn) {
     const { data, error, createRecord } =
-    useGeneralizedCrudMethod(noteChangeLogs);
+    useGeneralizedCrudMethod(url,errorNotificationFn);
 
     function createNoteChangeLogsEntity(noteId,operation) {
         createRecord({

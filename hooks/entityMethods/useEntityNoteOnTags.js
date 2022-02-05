@@ -1,12 +1,14 @@
-import noteOnTags from "../../data/noteOnTags.json";
-import { v4 as uuidv4 } from "uuid";
 import useGeneralizedCrudMethod from "../useGeneralizedCrudMethod";
+import { v4 as uuidv4 } from "uuid";
 
-function useEntityNoteOnTags() {
+function useEntityNoteOnTags(url,errorNotificationFn) {
   const { data, error, createRecord, deleteRecord } =
-    useGeneralizedCrudMethod(noteOnTags);
+    useGeneralizedCrudMethod(url,errorNotificationFn);
 
   function updateNoteTags(tagIdsToSet, noteId) {
+    if (!tagIdsToSet || !noteId) {
+      return;
+    }
     const tagIdsOnNote = data
       .filter((rec) => rec.noteId === noteId)
       .map((rec) => rec.tagId);
@@ -21,18 +23,15 @@ function useEntityNoteOnTags() {
         id: uuidv4(),
         noteId,
         tagId,
-        createDate: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
       });
     });
-
     const noteOnTagRecIdsToDelete = data
       .filter(
         (rec) => rec.noteId === noteId && tagIdsToDelete.includes(rec.tagId)
       )
       .map((rec) => rec.id);
-    noteOnTagRecIdsToDelete.forEach((id) => {
-      deleteRecord(id);
-    });
+    noteOnTagRecIdsToDelete.forEach((id) => deleteRecord(id));
   }
 
   function deleteNoteOnTagsByNoteId(noteId) {

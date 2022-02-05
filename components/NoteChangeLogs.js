@@ -22,7 +22,7 @@ function NoteChangeLogs() {
   function NotesListBase() {
     return (
       <div className="col-6">
-        <table class="table table-hover">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -62,7 +62,7 @@ function NoteChangeLogs() {
   function NoteListDetails() {
     return (
       <div className="col-6">
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">Change Date</th>
@@ -80,7 +80,7 @@ function NoteChangeLogs() {
                   })
                   .map(function (changeLogRec) {
                     return (
-                      <tr>
+                      <tr key={changeLogRec.id}>
                         <td>{dateOut(changeLogRec.changeDate)}</td>
                         <td>{changeLogRec.operation}</td>
                         <td>{`${changeLogRec.id.slice(0,6)}...`}</td>
@@ -94,7 +94,7 @@ function NoteChangeLogs() {
     );
   }
   return (
-    <div class="container">
+    <div className="container">
       <div className="row tab-content bg-transparent mt-4">
         <NotesListBase />
         <NoteListDetails />
