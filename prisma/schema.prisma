@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url = "file:../data/dev.db"
+  provider = "postgresql"
+  url = "postgres://jghejgazezzmfm:e525ce31b2fc658ce2787943b91eb9e68daee2699f941b36dacfc3d208e7adf5@ec2-52-45-83-163.compute-1.amazonaws.com:5432/dabp9qfc8sjtd4"
 }
 
 model Note {
